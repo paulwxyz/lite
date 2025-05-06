@@ -18,11 +18,7 @@ SDL_Window *window;
 static double get_scale(void) {
   float dpi;
   SDL_GetDisplayDPI(0, NULL, &dpi, NULL);
-#if _WIN32
-  return dpi / 96.0;
-#else
-  return 1.0;
-#endif
+  return dpi/ 96.0;
 }
 
 

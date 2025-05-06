@@ -113,7 +113,7 @@ top:
 
     case SDL_MOUSEMOTION:
       lua_pushstring(L, "mousemoved");
-      lua_pushnumber(L, e.motion.x);
+      lua_pushnumber(L,  e.motion.x);
       lua_pushnumber(L, e.motion.y);
       lua_pushnumber(L, e.motion.xrel);
       lua_pushnumber(L, e.motion.yrel);
