@@ -45,10 +45,17 @@ top:
     return 0;
   }
 
+  int winW, winH, drawW, drawH;
+  SDL_GetWindowSize(window, &winW, &winH);
+  SDL_GL_GetDrawableSize(window, &drawW, &drawH);
+  float scaleX = (float)drawW / winW;
+  float scaleY = (float)drawH / winH;
   switch (e.type) {
     case SDL_QUIT:
       lua_pushstring(L, "quit");
       return 1;
+    lua_pushnumber(L, e.button.x * scaleX);
+    lua_pushnumber(L, e.button.y * scaleY);
 
     case SDL_WINDOWEVENT:
       if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -126,6 +133,13 @@ top:
 
     default:
       goto top;
+    lua_pushnumber(L, e.button.x * scaleX);
+    lua_pushnumber(L, e.button.y * scaleY);
+    lua_pushnumber(L, e.motion.x * scaleX);
+    lua_pushnumber(L, e.motion.y * scaleY);
+    lua_pushnumber(L, e.motion.xrel * scaleX);
+    lua_pushnumber(L, e.motion.yrel * scaleY);
+    lua_pushnumber(L, e.wheel.y * scaleY);
   }
 
   return 0;

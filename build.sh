@@ -8,6 +8,10 @@ compiler="clang"
 cflags="$cflags -DLUA_USE_POSIX"
 lflags="$lflags -o $outfile"
 
+if command -v ccache >/dev/null; then
+  compiler="ccache $compiler"
+fi
+
 echo "compiling ($platform)..."
 for f in `find src -name "*.c"`; do
   $compiler -c $cflags $f -o "${f//\//_}.o"
