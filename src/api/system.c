@@ -105,8 +105,8 @@ top:
       if (e.button.button == 1) { SDL_CaptureMouse(1); }
       lua_pushstring(L, "mousepressed");
       lua_pushstring(L, button_name(e.button.button));
-      lua_pushnumber(L, e.button.x);
-      lua_pushnumber(L, e.button.y);
+      lua_pushnumber(L, e.button.x * scaleX);
+      lua_pushnumber(L, e.button.y * scaleY);
       lua_pushnumber(L, e.button.clicks);
       return 5;
 
@@ -114,32 +114,25 @@ top:
       if (e.button.button == 1) { SDL_CaptureMouse(0); }
       lua_pushstring(L, "mousereleased");
       lua_pushstring(L, button_name(e.button.button));
-      lua_pushnumber(L, e.button.x);
-      lua_pushnumber(L, e.button.y);
+      lua_pushnumber(L, e.button.x * scaleX);
+      lua_pushnumber(L, e.button.y * scaleY);
       return 4;
 
     case SDL_MOUSEMOTION:
       lua_pushstring(L, "mousemoved");
-      lua_pushnumber(L,  e.motion.x);
-      lua_pushnumber(L, e.motion.y);
-      lua_pushnumber(L, e.motion.xrel);
-      lua_pushnumber(L, e.motion.yrel);
+      lua_pushnumber(L,  e.motion.x * scaleX);
+      lua_pushnumber(L, e.motion.y * scaleY);
+      lua_pushnumber(L, e.motion.xrel * scaleX);
+      lua_pushnumber(L, e.motion.yrel * scaleY);
       return 5;
 
     case SDL_MOUSEWHEEL:
       lua_pushstring(L, "mousewheel");
-      lua_pushnumber(L, e.wheel.y);
+      lua_pushnumber(L, e.wheel.y * scaleY);
       return 2;
 
     default:
       goto top;
-    lua_pushnumber(L, e.button.x * scaleX);
-    lua_pushnumber(L, e.button.y * scaleY);
-    lua_pushnumber(L, e.motion.x * scaleX);
-    lua_pushnumber(L, e.motion.y * scaleY);
-    lua_pushnumber(L, e.motion.xrel * scaleX);
-    lua_pushnumber(L, e.motion.yrel * scaleY);
-    lua_pushnumber(L, e.wheel.y * scaleY);
   }
 
   return 0;
